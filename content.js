@@ -18,9 +18,16 @@ const controlKey = 'Space';
 let keyPressTimer = null;
 let isSpeeding = false;
 
+function isInputField(event) {
+  return event.target.matches('input, textarea, [contenteditable]');
+}
+
 function keyDownHandler(event) {
   if (event.code === controlKey) {
     event.stopImmediatePropagation();
+
+    // allow input fields to work normally
+    if (!isInputField(event)) event.preventDefault();
 
     if (!isSpeeding) {
       keyPressTimer = setTimeout(() => {
@@ -35,16 +42,23 @@ function keyUpHandler(event) {
   if (event.code === controlKey) {
     event.stopImmediatePropagation();
 
+    // allow input fields to work normally
+    if (!isInputField(event)) event.preventDefault();
+
     if (isSpeeding) {
       speedNormal();
       isSpeeding = false;
     } else {
-      togglePlayPause();
+      if (!isInputField(event)) togglePlayPause();
     }
 
     clearTimeout(keyPressTimer);
   }
 }
+
+// Remove existing event listeners to avoid duplicates
+document.removeEventListener('keydown', keyDownHandler, true);
+document.removeEventListener('keyup', keyUpHandler, true);
 
 document.addEventListener('keydown', keyDownHandler, true);
 document.addEventListener('keyup', keyUpHandler, true);
