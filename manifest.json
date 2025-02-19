@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Speedio",
+  "version": "1.0",
+  "description": "Enabling YouTube most underrated feature to any web video player: Hold space to speed up.",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "content.js"
+      ],
+      "all_frames": true,
+      "exclude_matches": ["*://www.youtube.com/*"]
+    }
+  ]
+}
