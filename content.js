@@ -19,7 +19,9 @@ let keyPressTimer = null;
 let isSpeeding = false;
 
 function isInputField(event) {
-  return event.target.matches('input, textarea, [contenteditable]');
+  return event.target.matches(
+    'input[type="text"], textarea, [contenteditable]'
+  );
 }
 
 function keyDownHandler(event) {
